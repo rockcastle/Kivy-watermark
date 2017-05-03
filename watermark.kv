@@ -1,0 +1,121 @@
+<Watermark>:
+    text_input: text_input
+    save_input: save_input
+    img: img
+    img2: img2
+    lview: lview
+    GridLayout:
+        cols:1
+        GridLayout:
+            cols: 2
+            size_hint_y: .12
+            Button:
+                text: "Load Image File/Folder"
+                background_color: 0, 1, 0, 1
+                size_hint_y: .015
+                height: 10
+                on_release: root.show_load()
+            TextInput:
+                id: text_input
+                size_hint_y: .2
+                multiline: False
+                readonly: True
+        GridLayout:
+            cols: 2
+            size_hint_y: .12
+            Label:
+                text: 'Watermark'
+                size_hint_y: .012
+                background_color: 0, 1, 0, 1
+            TextInput:
+                multiline: False
+                size_hint_y: .2
+                hint_text: "Apply watermark to file/folder"
+        GridLayout:
+            cols: 2
+            size_hint_y: .12
+            Button:
+                text: "Save Image File/Folder"
+                background_color: 0, 1, 0, 1
+                size_hint_y: .03
+                height: 5
+                #on_release: root.show_load()
+            TextInput:
+                id: save_input
+                size_hint_y: .15
+                multiline: False
+                readonly: True
+
+        GridLayout:
+            cols: 2
+
+            Image:
+                id: img
+                source: ""
+                pos: root.width/2, root.height/2
+                allow_stretch: True
+                keep_ratio: True
+                #size: 100,100
+                width: 90 #self.parent.width/10
+                height: 90 #self.parent.width/10
+            Image:
+                id: img2
+                source: ""
+                pos: root.width/2, root.height/2
+                allow_stretch: True
+                keep_ratio: True
+                #size_hint_y: None
+                #size_hint_x: None
+                #size: 100,100
+                width: 90 #self.parent.width/10
+                height: 90 #self.parent.width/10
+
+        ListView:
+            id: lview
+            #item_strings: [str(index) for index in range(10)]
+
+        GridLayout:
+            cols: 2
+            size_hint_y: .2
+            Button:
+                text: 'Exit'
+                background_color: .6, .9, 1, 1
+                size_hint_y:.02
+                height: 5 #int(root.height) / 8.9
+                on_press: root.exit()
+            Button:
+                text: 'Run'
+                background_color: .7, .9, .1, 1
+                size_hint_y: .02
+                height: 5 #int(root.height) / 8.9
+                #on_release: root.run_wmark()
+
+
+        ProgressBar:
+            id: bar
+            size_hint_y: .02
+            max: 100
+            value: 12
+
+
+<LoadDialog>:
+    fc: filechooser
+    BoxLayout:
+        size: root.size
+        pos: root.pos
+        orientation: "vertical"
+        FileChooserListView:
+            id: filechooser
+            path: "."
+            show_hidden: True
+            filters: ['*.jpg','*.png','*.jpeg','*.JPG','*.PNG']
+            #on_submit: self._update_files()
+        BoxLayout:
+            size_hint_y: None
+            height: 30
+            Button:
+                text: "Cancel"
+                on_release: root.cancel()
+            Button:
+                text: "Load"
+                on_release: root.load(filechooser.path, filechooser.selection)
